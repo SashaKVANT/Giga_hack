@@ -31,7 +31,7 @@ class NewsAgent:
 
     def first_step(self, news: str) -> dict[str, str]:
         try:
-            check_news_prompt = load_prompt('../prompts/check_news.yaml')
+            check_news_prompt = load_prompt('prompts/check_news.yaml')
             text = check_news_prompt.format(auditory_name=self.auditory_name) + '\n' + news
 
             raw_response = self.llm([SystemMessage(content=text)]).content
@@ -50,7 +50,7 @@ class NewsAgent:
 
     def second_step(self, news: str) -> str:
         try:
-            pretty_news_output_prompt = load_prompt('../prompts/pretty_news_output.yaml')
+            pretty_news_output_prompt = load_prompt('prompts/pretty_news_output.yaml')
             text = pretty_news_output_prompt.format(auditory_name=self.auditory_name) + '\n' + news
 
             raw_response = self.llm([SystemMessage(content=text)]).content
