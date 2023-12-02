@@ -29,7 +29,7 @@ class NewsAgent:
             LOG.info(pretty_news)
             return pretty_news
         else:
-            print(response)
+            LOG.info(response)
             return None
 
 
