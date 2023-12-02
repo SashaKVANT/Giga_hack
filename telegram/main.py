@@ -1,7 +1,6 @@
 import asyncio
 import get_news
 import post_news
-import logging
 import sys
 import os
 
@@ -10,8 +9,6 @@ project_path = os.path.join(current_path, '..')
 sys.path.append(project_path)
 
 from agent.news_agent import NewsAgent
-
-LOG = logging.Logger(__name__)
 
 last_message_post_time = None
 
@@ -28,7 +25,7 @@ async def process_data_corutine(queue):
         data = await queue.get()
         if data[0] != last_message_post_time:
             agent = NewsAgent('любители животных') #TODO
-            LOG.info("Новость от агента: ")
+            print("Новость от агента: ")
             pretty_news = agent.Run(data)
             if pretty_news != None:
                 last_message_post_time = data[0]

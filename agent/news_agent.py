@@ -2,10 +2,6 @@ from langchain.prompts import load_prompt
 from langchain.chat_models import GigaChat
 from langchain.chains import LLMChain
 from langchain.schema import SystemMessage
-import json
-import logging
-
-LOG = logging.Logger(__name__)
 
 class NewsAgent:
     def __init__(self, auditory_name: str):
@@ -26,10 +22,10 @@ class NewsAgent:
 
         if response.get("ответ") == "ПОДХОДИТ":
             pretty_news = self.second_step(news=news)
-            LOG.info(pretty_news)
+            print(pretty_news)
             return pretty_news
         else:
-            LOG.info(response)
+            print(response)
             return None
 
 
@@ -50,7 +46,7 @@ class NewsAgent:
             return response
 
         except Exception as e:
-            LOG.error(f"Unable to generate chat response: {e}")
+            print(f"Unable to generate chat response: {e}")
 
     def second_step(self, news: str) -> str:
         try:
@@ -61,4 +57,4 @@ class NewsAgent:
             return raw_response
         
         except Exception as e:
-            LOG.error(f"Unable to generate chat response: {e}")
+            print(f"Unable to generate chat response: {e}")

@@ -1,5 +1,4 @@
 from telethon.sync import TelegramClient
-import logging
 
 api_id = '20048560'  # Замените на свой API ID, который можно получить на https://my.telegram.org/auth
 api_hash = 'c829f30fffc6bea490bd60753417fcbf'  # Замените на свой API Hash, который можно получить на https://my.telegram.org/auth
@@ -9,8 +8,6 @@ channel_username = 't.me/dobnews'  # Замените на имя пользов
 session_name = 'get news'
 
 client = TelegramClient(session_name, api_id, api_hash)
-
-LOG = logging.Logger(__name__)
 
 async def get_latest_news():
     await client.connect()
@@ -22,16 +19,20 @@ async def get_latest_news():
 
         if messages:
             latest_message = messages[0]
-            LOG.info(f"Новость из канала {channel_username}:")
-            LOG.info(f"Автор: {latest_message.sender_id}")
-            LOG.info(f"Дата: {latest_message.date}")
-            LOG.info(f"Текст: {latest_message.text}")
+            print(f"Новость из канала {channel_username}:")
+            print(f"Автор: {latest_message.sender_id}")
+            print(f"Дата: {latest_message.date}")
+            print(f"Текст: {latest_message.text}")
 
             return [latest_message.date, latest_message.text]
         else:
-            LOG.error(f"Канал {channel_username} не содержит сообщений.")
+            print(f"Канал {channel_username} не содержит сообщений.")
 
     except Exception as e:
-        LOG.error(f"Произошла ошибка: {e}")
+        print(f"Произошла ошибка: {e}")
 
     await client.disconnect()
+
+# if __name__ == '__main__':
+#     import asyncio
+#     asyncio.run(get_latest_news())
