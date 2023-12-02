@@ -1,6 +1,5 @@
 import asyncio
-import get_news
-import post_news
+import news
 import sys
 import os
 
@@ -14,7 +13,7 @@ last_message_post_time = None
 
 async def get_news_corutine(queue):
     while True:
-        data = await get_news.get_latest_news()
+        data = await news.get_latest_news()
         if data:
             await queue.put(data[1])
         await asyncio.sleep(10)
@@ -29,7 +28,7 @@ async def process_data_corutine(queue):
             pretty_news = agent.Run(data)
             if pretty_news != None:
                 last_message_post_time = data[0]
-                await post_news.post_news_to_channel(pretty_news)
+                await news.post_news_to_channel(pretty_news)
 
 async def main():
     loop = asyncio.get_event_loop()
