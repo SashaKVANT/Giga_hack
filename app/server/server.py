@@ -11,12 +11,12 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.join(current_path, '..')
 sys.path.append(project_path)
 
-from telegram.client_conf import TelegramClientConfig
+from telegram.client_conf import TelegramClientConfig, phone_number
 from telegram.news import get_news_coroutine, process_data_coroutine
 from server.models import AgentRequestModel
 
 class NewsAgentServer:
-    phone_number: str = "89680312267"
+    phone_number: str = phone_number
 
     def __init__(self):
         self.data_queue = asyncio.Queue()
