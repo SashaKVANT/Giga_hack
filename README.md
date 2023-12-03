@@ -12,7 +12,7 @@ poetry install --no-root
 ```bash
 source .venv/bin/activate
 ```
-Зайдите в директорию с app с приложением:
+Зайдите в директорию app с приложением:
 ```bash
 cd app
 ```
