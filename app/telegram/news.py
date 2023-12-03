@@ -29,7 +29,7 @@ async def process_data_coroutine(client, dest_channel, auditory_name, queue, sto
         if data[0] != last_message_post_time:
             agent = NewsAgent(auditory_name)
             print("Новость от агента: ")
-            pretty_news = agent.run_test(data)
+            pretty_news = agent.run(data)
             if pretty_news is not None:
                 last_message_post_time = data[0]
                 await post_news_to_channel(client, dest_channel, pretty_news)
