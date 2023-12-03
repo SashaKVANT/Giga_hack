@@ -1,6 +1,5 @@
 from langchain.prompts import load_prompt
 from langchain.chat_models import GigaChat
-from langchain.chains import LLMChain
 from langchain.schema import SystemMessage
 
 class NewsAgent:
@@ -27,7 +26,6 @@ class NewsAgent:
         else:
             print(response)
             return None
-
 
     def first_step(self, news: str) -> dict[str, str]:
         try:
@@ -58,3 +56,36 @@ class NewsAgent:
         
         except Exception as e:
             print(f"Unable to generate chat response: {e}")
+    
+    def run_test(self, news: str):
+        is_stop: bool = False
+        steps = self.generate_plan()
+
+        step_prompt = load_prompt('prompts/step.yaml')
+
+        previous_step = f'''
+{{
+    "data": "{news}",
+    "stop": "false",
+    "args": {{
+        "target": "{self.auditory_name}"
+    }}
+}}
+        '''
+        for step in steps:
+            if not step:
+                continue
+            step_content = step_prompt.format(plan=step, 
+                                              previous_step=previous_step)
+            previous_step = self.llm([SystemMessage(content=step_content)]).content
+
+        return previous_step
+
+
+    def generate_plan(self):
+        plan_prompt = load_prompt('prompts/plan.yaml')
+        plan = plan_prompt.format(auditory_name=self.auditory_name)
+
+        steps = plan.split('\n')
+
+        return steps

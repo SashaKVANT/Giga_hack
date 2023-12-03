@@ -1,0 +1,8 @@
+input_variables: [auditory_name]
+output_parser: null
+template: |
+      1. Получить на вход новость и целевую аудиторию и понять, подходит ли новость для {auditory_name}. Если не подходит, в поле stop напиши true, если подходит, в поле stop напиши false. Поле data передай без изменений.
+      2. Замени содержимое news содержимым в более подходящем стиле для {auditory_name} из поля target.
+      3. Создай в args новое поле ad и передай туда подходящую по смыслу рекламу.
+template_format: f-string
+_type: prompt
