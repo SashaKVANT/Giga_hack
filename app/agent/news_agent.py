@@ -1,6 +1,7 @@
 from langchain.prompts import load_prompt
 from langchain.chat_models import GigaChat
 from langchain.schema import SystemMessage
+import json
 
 class NewsAgent:
     def __init__(self, auditory_name: str):
@@ -35,6 +36,12 @@ class NewsAgent:
             step_content = step_prompt.format(plan=step, 
                                               previous_step=previous_step)
             previous_step = self.llm([SystemMessage(content=step_content)]).content
+            pos = previous_step.find("\"stop\": \"")
+            start_value_index = pos + len("\"stop\": \"")
+            end_value_index = previous_step.find('"', start_value_index)
+            stop = previous_step[start_value_index:end_value_index]
+            if bool(stop):
+                break
 
         return previous_step
 
